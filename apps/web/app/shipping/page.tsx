@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ShippingAndDelivery() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-12 text-gray-800 dark:text-gray-200">
