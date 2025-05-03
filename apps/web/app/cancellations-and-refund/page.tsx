@@ -15,7 +15,7 @@ export default function CancellationAndRefund() {
               <section className="mb-8">
                 <p className="text-gray-600">
                   This policy outlines the cancellation and refund procedures
-                  for CreatorCollab's video management platform.
+                  for Syncly's video management platform.
                 </p>
               </section>
 
@@ -137,12 +137,7 @@ export default function CancellationAndRefund() {
                   For questions regarding this policy, please contact us:
                 </p>
                 <div className="bg-blue-50 p-6 rounded-lg">
-                  <p className="text-gray-800">
-                    Email: billing@creatorcollab.com
-                  </p>
-                  <p className="text-gray-800">
-                    Support: help.creatorcollab.com
-                  </p>
+                  <p className="text-gray-800">Email: guptas3067@gmail.com</p>
                 </div>
                 <p className="text-sm text-gray-500 mt-6">
                   This policy may be updated from time to time. The latest
