@@ -1,60 +1,48 @@
 "use client";
-import { getRazorPayOrderId } from "@/lib/paymentActions";
+import { addToast } from "@heroui/react";
 import { PlanType } from "@repo/db";
-import { useRouter, useSearchParams } from "next/navigation";
+import { plans, TPlan } from "@repo/lib/constants";
+import { useRouter } from "next/navigation";
 import Script from "next/script";
-import { useState } from "react";
-import { FiArrowLeft, FiCheckCircle, FiLoader } from "react-icons/fi";
-import { plans } from "../components/pricing";
+import { useEffect, useState } from "react";
+import { FiArrowLeft, FiCheckCircle } from "react-icons/fi";
 
-export type TPaymentMethod = "stripe" | "razorpay";
-export default function CheckoutPage() {
-  const searchParams = useSearchParams();
+export type TPaymentMethod = "razorpay";
+type CheckoutPageProps = { searchParams: Promise<{ planType: PlanType }> }
+
+export default function CheckoutPage({ searchParams }: CheckoutPageProps) {
   const router = useRouter();
-  const planType: PlanType =
-    (searchParams.get("planType") as PlanType) ?? "PRO";
-  const [loading, setLoading] = useState<TPaymentMethod | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<TPlan>(plans[1]); // Monthly by default
 
-  const handlePayment = async (method: TPaymentMethod) => {
-    setLoading(method);
+  useEffect(() => {
+    (async () => {
+      const { planType } = await searchParams;
+      const selectedPlan = plans.find(p => p.name === planType)
+      if (selectedPlan) setSelectedPlan(selectedPlan);
+
+    })();
+  }, [searchParams]);
+
+  const handlePayment = async (duration: 'monthly' | 'yearly') => {
     try {
-      const amount: number = Number(
-        plans.find((plan) => plan.name === planType)?.price.replace("$", "")
-      );
-      if (!amount) throw new Error("Invalid amount");
-      console.log("amount", amount);
 
-      if (method === "razorpay") {
-        // const res = await getRazorPaySubscriptionId({
-        //   'amount',
-        //   currency: "USD",
-        // });
-        const res = await getRazorPayOrderId({
-          amount,
-          currency: "USD",
-        });
-        if (!res.ok || !res.result?.orderId)
-          throw new Error("Failed to create Razorpay orderId");
+      const razorpay = new (window as any).Razorpay({
+        key: "rzp_test_q7TZXZSHpK9aEn",
+        // subscription_id: duration === "monthly" ? selectedPlan.monthlySubscriptionId : selectedPlan.yearlySubscriptionId,
+        // subscription_id: 'sub_QSWzbEqWeWjlU6',
+        plan_id: 'plan_QSWz6nuQxdL7Sj',
+        name: "Syncly",
+        description: duration === "monthly" ? "Monthly Subscription" : "Yearly Subscription (2 months free!)",
+        theme: { color: "#6366F1" },
+        handler: function (response: any) {
+          alert("Subscription successful: " + JSON.stringify(response));
+        },
+      });
 
-        const razorpay = new (window as any).Razorpay({
-          key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-          // subscription_id: res.result.subscriptionId,
-          orderId: res.result.orderId,
-          name: "Syncly",
-          description: "Monthly Subscription",
-          theme: { color: "#6366F1" },
-
-          handler: function (response: any) {
-            alert("Subscription successful: " + JSON.stringify(response));
-          },
-        });
-
-        razorpay.open();
-      }
+      razorpay.open();
     } catch (error) {
       console.error("Payment failed:", error);
-    } finally {
-      setLoading(null);
+      addToast({ description: 'Oops! Something went wrong, please contact us.', color: 'danger' })
     }
   };
 
@@ -67,9 +55,9 @@ export default function CheckoutPage() {
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-xl p-8">
         <button
           onClick={() => router.back()}
-          className="flex items-center text-sm  hover:text-indigo-600 transition mb-6"
+          className="flex items-center justify-center text-sm hover:text-indigo-600 transition mb-6"
         >
-          <FiArrowLeft className="mr-2" />
+          <FiArrowLeft className="mr-2 mb-1" />
           Back
         </button>
 
@@ -79,92 +67,58 @@ export default function CheckoutPage() {
               <FiCheckCircle className="text-indigo-600 w-6 h-6" />
             </div>
           </div>
-          <h1 className="text-2xl font-bold ">Complete Your Purchase</h1>
           <p className=" mt-1">
-            Selected Plan:{"  "}
+            Selected Plan: &nbsp;
             <span className="font-semibold text-indigo-600 dark:text-indigo-400">
-              {planType}
+              {selectedPlan.name}
             </span>
+          </p>
+          <p className="mt-1 text-gray-500 dark:text-gray-400">
+            Unlock premium features with a subscription.
           </p>
         </div>
 
-        <div className="space-y-5">
+        <div className="space-y-4">
+          {/* Yearly Plan */}
           <div
-            onClick={() => (loading ? null : handlePayment("stripe"))}
-            className={`group relative cursor-pointer border-2 rounded-lg p-5 transition duration-200 ${
-              loading === "stripe"
-                ? "opacity-60 pointer-events-none"
-                : "hover:shadow-md hover:border-indigo-500"
-            }`}
+            className="cursor-pointer border-2 rounded-lg p-5 transition duration-200 relative border-orange-600 hover:shadow-lg hover:scale-[1.01] hover:border-orange-500"
+            onClick={() => handlePayment('yearly')}
           >
+            <div className="absolute top-0 right-0 bg-orange-600 text-xs font-bold text-black px-2 py-1 rounded-bl-md">
+              2 Months Free!
+            </div>
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <img
-                  src="https://logo.clearbit.com/stripe.com"
-                  alt="Stripe"
-                  className="h-8"
-                />
-                <div>
-                  <h3 className="font-medium text-gray-800 dark:text-white">
-                    Credit/Debit Card
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    Visa, Mastercard, Amex
-                  </p>
-                </div>
+              <div>
+                <h3 className="font-semibold text-gray-800 dark:text-white">Yearly</h3>
+                <p className="text-sm text-gray-500">Pay once, enjoy all year</p>
               </div>
-              {loading === "stripe" ? (
-                <FiLoader className="animate-spin text-gray-400" />
-              ) : (
-                <span className="text-lg text-gray-600 dark:text-gray-300">
-                  {plans.find((plan) => plan.name === planType)?.price ?? "N/A"}
-                </span>
-              )}
+              <span className="text-lg font-medium text-gray-700 dark:text-gray-200">
+                ${Number(selectedPlan.price.replace('$', '')) * 10}
+              </span>
             </div>
           </div>
 
-          {/* Razorpay */}
+          {/* Monthly Plan */}
           <div
-            onClick={() => (loading ? null : handlePayment("razorpay"))}
-            className={`group relative cursor-pointer border-2 rounded-lg p-5 transition duration-200 ${
-              loading === "razorpay"
-                ? "opacity-60 pointer-events-none"
-                : "hover:shadow-md hover:border-blue-500"
-            }`}
+            onClick={() => handlePayment('monthly')}
+            className="cursor-pointer border-2 rounded-lg p-5 transition duration-200 border-indigo-500 shadow-md hover:shadow-lg hover:scale-[1.01] hover:border-indigo-400"
           >
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <img
-                  src="https://logo.clearbit.com/razorpay.com"
-                  alt="Razorpay"
-                  className="h-8"
-                />
-
-                <div>
-                  <h3 className="font-medium text-gray-800 dark:text-white">
-                    Razorpay
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    UPI, Netbanking, Wallets
-                  </p>
-                </div>
+              <div>
+                <h3 className="font-semibold text-gray-800 dark:text-white">Monthly</h3>
+                <p className="text-sm text-gray-500">Billed monthly, cancel anytime</p>
               </div>
-              {loading === "razorpay" ? (
-                <FiLoader className="animate-spin text-gray-400" />
-              ) : (
-                <span className="text-lg text-gray-600 dark:text-gray-300">
-                  {plans.find((plan) => plan.name === planType)?.price ?? "N/A"}
-                </span>
-              )}
+              <span className="text-lg font-medium text-gray-700 dark:text-gray-200">
+                {selectedPlan.price}
+              </span>
             </div>
           </div>
         </div>
 
-        <p className="text-xs text-center text-gray-400 mt-10">
-          🔒 Secure payments powered by{" "}
-          <span className="font-medium">Stripe</span> &{" "}
-          <span className="font-medium">Razorpay</span>. Your data is encrypted
-          and safe.
+
+
+        <p className="text-xs text-center text-gray-400 mt-6">
+          🔒 Secure payments powered by <span className="font-medium">Razorpay</span>.
         </p>
       </div>
     </div>

@@ -17,7 +17,7 @@ import { uploadVideoAction } from "@repo/lib/actions";
 import { ImportButton } from "@repo/ui";
 import { useForm } from "react-hook-form";
 import { FaUpload } from "react-icons/fa";
-import { TUserDetails } from "../videos/page";
+import { TUserDetails } from "../page";
 type TImportVideo = {
   videoFile: FileList;
   channelId?: string;

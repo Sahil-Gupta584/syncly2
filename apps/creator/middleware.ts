@@ -4,13 +4,12 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 export default async function middleware(req: NextRequest) {
-  const publicRoutes = ["/auth", "/privacy-policy"];
+  const publicRoutes = ["/auth", "/privacy-policy",'/api/webhook'];
   const { pathname } = req.nextUrl;
   const session = await getToken({
     req,
     secret: process.env.AUTH_SECRET,
   });
-  console.log("AUTH_SECRET", process.env.AUTH_SECRET);
 
   if (!session && !publicRoutes.includes(pathname)) {
     console.log("can't access public route");

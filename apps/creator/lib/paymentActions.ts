@@ -14,21 +14,23 @@ export async function getRazorPaySubscriptionId({
       key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
       key_secret: process.env.RAZORPAY_SECRET_ID,
     });
-    const plan = await razorpay.plans.create({
-      period: "monthly",
-      interval: 1,
-      item: {
-        name: "PRO",
-        amount: 50000,
-        currency: "USD",
-      },
-    });
+    // const plan = await razorpay.plans.create({
+    //   period: "monthly",
+    //   interval: 1,
+    //   item: {
+    //     name: "PRO",
+    //     amount: 50000,
+    //     currency: "USD",
+    //   },
+    // });
 
     const subscription = await razorpay.subscriptions.create({
-      plan_id: plan.id,
+      plan_id: "plan_QQae92nlulWnal",
       customer_notify: 1,
       total_count: 12, // 12 months
     });
+    console.log("subscriptionRes", subscription);
+
     return backendRes({
       ok: true,
       result: { subscriptionId: subscription.id },

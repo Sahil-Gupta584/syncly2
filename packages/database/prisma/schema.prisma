@@ -48,7 +48,7 @@ model User {
   image          String
   emailVerified  DateTime?
   role           Role
-  plan           PlanType?
+  plan           PlanType? 
   Authenticator  Authenticator[]
   ownedVideos    Video[]         @relation("VideoOwner")
   importedVideos Video[]         @relation("VideoImporter")
@@ -62,7 +62,7 @@ model User {
 
   account  Account[]
   sessions Session[]
-
+  subscription Subscription?
   trialEndAt String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -193,4 +193,17 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, credentialID])
+}
+
+model Subscription {
+  id                String   @id @default(uuid())
+  razorpaySubId     String   @unique // Razorpay subscription ID
+  razorpayCustId    String
+  plan              PlanType
+  status            String   // e.g., active, cancelled, completed
+  currentPeriodEnd  DateTime
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
