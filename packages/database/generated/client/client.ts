@@ -111,3 +111,6 @@ export const PrivacyStatus = $Enums.PrivacyStatus
 
 export type InviteStatus = $Enums.InviteStatus
 export const InviteStatus = $Enums.InviteStatus
+
+export type subscriptionStatus = $Enums.subscriptionStatus
+export const subscriptionStatus = $Enums.subscriptionStatus

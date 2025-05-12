@@ -61,7 +61,7 @@ export default function DrawerComponent({ session }: { session: Session }) {
     <>
       <Button
         onPress={onOpen}
-        className="flex items-center justify-end sm:justify-center px-0 sm:px-2 gap-2 bg-transparent hover:bg-gray-300 transition py-1 rounded-md min-w-fit"
+        className="flex items-center justify-end sm:justify-center px-0 sm:px-2 gap-2 bg-transparent hover:bg-gray-500 transition py-1 rounded-md min-w-fit"
       >
         <Avatar
           className="md:h-7 md:w-7"

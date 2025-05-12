@@ -232,7 +232,7 @@ export type UserWhereInput = {
   accessibleVideos?: Prisma.VideoEditorListRelationFilter
   account?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
-  subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  subscriptions?: Prisma.SubscriptionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -257,7 +257,7 @@ export type UserOrderByWithRelationInput = {
   accessibleVideos?: Prisma.VideoEditorOrderByRelationAggregateInput
   account?: Prisma.AccountOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
-  subscription?: Prisma.SubscriptionOrderByWithRelationInput
+  subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -285,7 +285,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   accessibleVideos?: Prisma.VideoEditorListRelationFilter
   account?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
-  subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  subscriptions?: Prisma.SubscriptionListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -342,7 +342,7 @@ export type UserCreateInput = {
   accessibleVideos?: Prisma.VideoEditorCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -367,7 +367,7 @@ export type UserUncheckedCreateInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -392,7 +392,7 @@ export type UserUpdateInput = {
   accessibleVideos?: Prisma.VideoEditorUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -417,7 +417,7 @@ export type UserUncheckedUpdateInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -688,18 +688,18 @@ export type UserUpdateOneRequiredWithoutAuthenticatorNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuthenticatorInput, Prisma.UserUpdateWithoutAuthenticatorInput>, Prisma.UserUncheckedUpdateWithoutAuthenticatorInput>
 }
 
-export type UserCreateNestedOneWithoutSubscriptionInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionInput
+export type UserCreateNestedOneWithoutSubscriptionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutSubscriptionNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionInput
-  upsert?: Prisma.UserUpsertWithoutSubscriptionInput
+export type UserUpdateOneRequiredWithoutSubscriptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionsInput
+  upsert?: Prisma.UserUpsertWithoutSubscriptionsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubscriptionInput, Prisma.UserUpdateWithoutSubscriptionInput>, Prisma.UserUncheckedUpdateWithoutSubscriptionInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.UserUpdateWithoutSubscriptionsInput>, Prisma.UserUncheckedUpdateWithoutSubscriptionsInput>
 }
 
 export type UserCreateWithoutEditorsInput = {
@@ -723,7 +723,7 @@ export type UserCreateWithoutEditorsInput = {
   accessibleVideos?: Prisma.VideoEditorCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEditorsInput = {
@@ -747,7 +747,7 @@ export type UserUncheckedCreateWithoutEditorsInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEditorsInput = {
@@ -776,7 +776,7 @@ export type UserCreateWithoutCreatorsInput = {
   accessibleVideos?: Prisma.VideoEditorCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatorsInput = {
@@ -800,7 +800,7 @@ export type UserUncheckedCreateWithoutCreatorsInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatorsInput = {
@@ -840,7 +840,7 @@ export type UserUpdateWithoutEditorsInput = {
   accessibleVideos?: Prisma.VideoEditorUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEditorsInput = {
@@ -864,7 +864,7 @@ export type UserUncheckedUpdateWithoutEditorsInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutCreatorsInput = {
@@ -899,7 +899,7 @@ export type UserUpdateWithoutCreatorsInput = {
   accessibleVideos?: Prisma.VideoEditorUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatorsInput = {
@@ -923,7 +923,7 @@ export type UserUncheckedUpdateWithoutCreatorsInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOwnedVideosInput = {
@@ -947,7 +947,7 @@ export type UserCreateWithoutOwnedVideosInput = {
   accessibleVideos?: Prisma.VideoEditorCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOwnedVideosInput = {
@@ -971,7 +971,7 @@ export type UserUncheckedCreateWithoutOwnedVideosInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOwnedVideosInput = {
@@ -1000,7 +1000,7 @@ export type UserCreateWithoutImportedVideosInput = {
   accessibleVideos?: Prisma.VideoEditorCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutImportedVideosInput = {
@@ -1024,7 +1024,7 @@ export type UserUncheckedCreateWithoutImportedVideosInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutImportedVideosInput = {
@@ -1064,7 +1064,7 @@ export type UserUpdateWithoutOwnedVideosInput = {
   accessibleVideos?: Prisma.VideoEditorUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOwnedVideosInput = {
@@ -1088,7 +1088,7 @@ export type UserUncheckedUpdateWithoutOwnedVideosInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutImportedVideosInput = {
@@ -1123,7 +1123,7 @@ export type UserUpdateWithoutImportedVideosInput = {
   accessibleVideos?: Prisma.VideoEditorUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutImportedVideosInput = {
@@ -1147,7 +1147,7 @@ export type UserUncheckedUpdateWithoutImportedVideosInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutChannelsInput = {
@@ -1171,7 +1171,7 @@ export type UserCreateWithoutChannelsInput = {
   accessibleVideos?: Prisma.VideoEditorCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutChannelsInput = {
@@ -1195,7 +1195,7 @@ export type UserUncheckedCreateWithoutChannelsInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutChannelsInput = {
@@ -1235,7 +1235,7 @@ export type UserUpdateWithoutChannelsInput = {
   accessibleVideos?: Prisma.VideoEditorUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutChannelsInput = {
@@ -1259,7 +1259,7 @@ export type UserUncheckedUpdateWithoutChannelsInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccessibleVideosInput = {
@@ -1283,7 +1283,7 @@ export type UserCreateWithoutAccessibleVideosInput = {
   receivedInvites?: Prisma.InviteCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccessibleVideosInput = {
@@ -1307,7 +1307,7 @@ export type UserUncheckedCreateWithoutAccessibleVideosInput = {
   receivedInvites?: Prisma.InviteUncheckedCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccessibleVideosInput = {
@@ -1347,7 +1347,7 @@ export type UserUpdateWithoutAccessibleVideosInput = {
   receivedInvites?: Prisma.InviteUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccessibleVideosInput = {
@@ -1371,7 +1371,7 @@ export type UserUncheckedUpdateWithoutAccessibleVideosInput = {
   receivedInvites?: Prisma.InviteUncheckedUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSentInvitesInput = {
@@ -1395,7 +1395,7 @@ export type UserCreateWithoutSentInvitesInput = {
   accessibleVideos?: Prisma.VideoEditorCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSentInvitesInput = {
@@ -1419,7 +1419,7 @@ export type UserUncheckedCreateWithoutSentInvitesInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSentInvitesInput = {
@@ -1448,7 +1448,7 @@ export type UserCreateWithoutReceivedInvitesInput = {
   accessibleVideos?: Prisma.VideoEditorCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReceivedInvitesInput = {
@@ -1472,7 +1472,7 @@ export type UserUncheckedCreateWithoutReceivedInvitesInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReceivedInvitesInput = {
@@ -1512,7 +1512,7 @@ export type UserUpdateWithoutSentInvitesInput = {
   accessibleVideos?: Prisma.VideoEditorUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentInvitesInput = {
@@ -1536,7 +1536,7 @@ export type UserUncheckedUpdateWithoutSentInvitesInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReceivedInvitesInput = {
@@ -1571,7 +1571,7 @@ export type UserUpdateWithoutReceivedInvitesInput = {
   accessibleVideos?: Prisma.VideoEditorUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReceivedInvitesInput = {
@@ -1595,7 +1595,7 @@ export type UserUncheckedUpdateWithoutReceivedInvitesInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountInput = {
@@ -1619,7 +1619,7 @@ export type UserCreateWithoutAccountInput = {
   receivedInvites?: Prisma.InviteCreateNestedManyWithoutEditorInput
   accessibleVideos?: Prisma.VideoEditorCreateNestedManyWithoutEditorInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountInput = {
@@ -1643,7 +1643,7 @@ export type UserUncheckedCreateWithoutAccountInput = {
   receivedInvites?: Prisma.InviteUncheckedCreateNestedManyWithoutEditorInput
   accessibleVideos?: Prisma.VideoEditorUncheckedCreateNestedManyWithoutEditorInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountInput = {
@@ -1683,7 +1683,7 @@ export type UserUpdateWithoutAccountInput = {
   receivedInvites?: Prisma.InviteUpdateManyWithoutEditorNestedInput
   accessibleVideos?: Prisma.VideoEditorUpdateManyWithoutEditorNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountInput = {
@@ -1707,7 +1707,7 @@ export type UserUncheckedUpdateWithoutAccountInput = {
   receivedInvites?: Prisma.InviteUncheckedUpdateManyWithoutEditorNestedInput
   accessibleVideos?: Prisma.VideoEditorUncheckedUpdateManyWithoutEditorNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -1731,7 +1731,7 @@ export type UserCreateWithoutSessionsInput = {
   receivedInvites?: Prisma.InviteCreateNestedManyWithoutEditorInput
   accessibleVideos?: Prisma.VideoEditorCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -1755,7 +1755,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   receivedInvites?: Prisma.InviteUncheckedCreateNestedManyWithoutEditorInput
   accessibleVideos?: Prisma.VideoEditorUncheckedCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -1795,7 +1795,7 @@ export type UserUpdateWithoutSessionsInput = {
   receivedInvites?: Prisma.InviteUpdateManyWithoutEditorNestedInput
   accessibleVideos?: Prisma.VideoEditorUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -1819,7 +1819,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   receivedInvites?: Prisma.InviteUncheckedUpdateManyWithoutEditorNestedInput
   accessibleVideos?: Prisma.VideoEditorUncheckedUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAuthenticatorInput = {
@@ -1843,7 +1843,7 @@ export type UserCreateWithoutAuthenticatorInput = {
   accessibleVideos?: Prisma.VideoEditorCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAuthenticatorInput = {
@@ -1867,7 +1867,7 @@ export type UserUncheckedCreateWithoutAuthenticatorInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedCreateNestedManyWithoutEditorInput
   account?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAuthenticatorInput = {
@@ -1907,7 +1907,7 @@ export type UserUpdateWithoutAuthenticatorInput = {
   accessibleVideos?: Prisma.VideoEditorUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuthenticatorInput = {
@@ -1931,10 +1931,10 @@ export type UserUncheckedUpdateWithoutAuthenticatorInput = {
   accessibleVideos?: Prisma.VideoEditorUncheckedUpdateManyWithoutEditorNestedInput
   account?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutSubscriptionInput = {
+export type UserCreateWithoutSubscriptionsInput = {
   id?: string
   email: string
   name: string
@@ -1958,7 +1958,7 @@ export type UserCreateWithoutSubscriptionInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutSubscriptionInput = {
+export type UserUncheckedCreateWithoutSubscriptionsInput = {
   id?: string
   email: string
   name: string
@@ -1982,23 +1982,23 @@ export type UserUncheckedCreateWithoutSubscriptionInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutSubscriptionInput = {
+export type UserCreateOrConnectWithoutSubscriptionsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
 }
 
-export type UserUpsertWithoutSubscriptionInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionInput, Prisma.UserUncheckedUpdateWithoutSubscriptionInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput>
+export type UserUpsertWithoutSubscriptionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionsInput, Prisma.UserUncheckedUpdateWithoutSubscriptionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutSubscriptionInput = {
+export type UserUpdateToOneWithWhereWithoutSubscriptionsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionInput, Prisma.UserUncheckedUpdateWithoutSubscriptionInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionsInput, Prisma.UserUncheckedUpdateWithoutSubscriptionsInput>
 }
 
-export type UserUpdateWithoutSubscriptionInput = {
+export type UserUpdateWithoutSubscriptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2022,7 +2022,7 @@ export type UserUpdateWithoutSubscriptionInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutSubscriptionInput = {
+export type UserUncheckedUpdateWithoutSubscriptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2063,6 +2063,7 @@ export type UserCountOutputType = {
   accessibleVideos: number
   account: number
   sessions: number
+  subscriptions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2077,6 +2078,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   accessibleVideos?: boolean | UserCountOutputTypeCountAccessibleVideosArgs
   account?: boolean | UserCountOutputTypeCountAccountArgs
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+  subscriptions?: boolean | UserCountOutputTypeCountSubscriptionsArgs
 }
 
 /**
@@ -2166,6 +2168,13 @@ export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.SessionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SubscriptionWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2189,7 +2198,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   accessibleVideos?: boolean | Prisma.User$accessibleVideosArgs<ExtArgs>
   account?: boolean | Prisma.User$accountArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
-  subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
+  subscriptions?: boolean | Prisma.User$subscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2245,7 +2254,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   accessibleVideos?: boolean | Prisma.User$accessibleVideosArgs<ExtArgs>
   account?: boolean | Prisma.User$accountArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
-  subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
+  subscriptions?: boolean | Prisma.User$subscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2265,7 +2274,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     accessibleVideos: Prisma.$VideoEditorPayload<ExtArgs>[]
     account: Prisma.$AccountPayload<ExtArgs>[]
     sessions: Prisma.$SessionPayload<ExtArgs>[]
-    subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
+    subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2683,7 +2692,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   accessibleVideos<T extends Prisma.User$accessibleVideosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accessibleVideosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VideoEditorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   account<T extends Prisma.User$accountArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  subscription<T extends Prisma.User$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  subscriptions<T extends Prisma.User$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3375,9 +3384,9 @@ export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
- * User.subscription
+ * User.subscriptions
  */
-export type User$subscriptionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Subscription
    */
@@ -3391,6 +3400,11 @@ export type User$subscriptionArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   include?: Prisma.SubscriptionInclude<ExtArgs> | null
   where?: Prisma.SubscriptionWhereInput
+  orderBy?: Prisma.SubscriptionOrderByWithRelationInput | Prisma.SubscriptionOrderByWithRelationInput[]
+  cursor?: Prisma.SubscriptionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SubscriptionScalarFieldEnum | Prisma.SubscriptionScalarFieldEnum[]
 }
 
 /**

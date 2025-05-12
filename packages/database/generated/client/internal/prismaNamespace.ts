@@ -1416,9 +1416,7 @@ export const SubscriptionScalarFieldEnum = {
   id: 'id',
   razorpaySubId: 'razorpaySubId',
   razorpayCustId: 'razorpayCustId',
-  plan: 'plan',
   status: 'status',
-  currentPeriodEnd: 'currentPeriodEnd',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1573,6 +1571,20 @@ export type ListEnumInviteStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'subscriptionStatus'
+ */
+export type EnumsubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'subscriptionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'subscriptionStatus[]'
+ */
+export type ListEnumsubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'subscriptionStatus[]'>
     
 
 

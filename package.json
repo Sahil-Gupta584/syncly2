@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@types/nodemailer": "^6.4.17",
+    "eslint-plugin-unused-imports": "^4.1.4",
     "prettier": "^3.5.3",
     "turbo": "^2.5.2",
     "typescript": "5.8.2"
@@ -27,6 +28,7 @@
     "@heroui/react": "^2.7.6",
     "autoprefixer": "^10.4.21",
     "axios": "^1.9.0",
+    "dodopayments": "^1.22.0",
     "dotenv": "^16.5.0",
     "framer-motion": "^12.9.4",
     "googleapis": "^148.0.0",

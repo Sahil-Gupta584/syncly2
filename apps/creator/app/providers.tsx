@@ -1,7 +1,7 @@
-'use client'
+"use client";
 import { HeroUIProvider, ToastProvider } from "@heroui/react";
 import { SessionProvider } from "next-auth/react";
-import { ThemeProvider } from 'next-themes';
+import { ThemeProvider } from "next-themes";
 
 export default function Providers({
   children,

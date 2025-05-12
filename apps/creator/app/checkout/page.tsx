@@ -12,29 +12,33 @@ type CheckoutPageProps = { searchParams: Promise<{ planType: PlanType }> }
 
 export default function CheckoutPage({ searchParams }: CheckoutPageProps) {
   const router = useRouter();
-  const [selectedPlan, setSelectedPlan] = useState<TPlan>(plans[1]); // Monthly by default
+  const [selectedPlan, setSelectedPlan] = useState<TPlan>(plans[1]);
 
   useEffect(() => {
     (async () => {
       const { planType } = await searchParams;
-      const selectedPlan = plans.find(p => p.name === planType)
+      const selectedPlan = plans.find(p => p.name === planType);
       if (selectedPlan) setSelectedPlan(selectedPlan);
 
     })();
   }, [searchParams]);
 
-  const handlePayment = async (duration: 'monthly' | 'yearly') => {
+  const handlePayment = async (duration: "monthly" | "yearly") => {
     try {
-
+      if (!process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID) {
+        return;
+      }
       const razorpay = new (window as any).Razorpay({
+        // key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         key: "rzp_test_q7TZXZSHpK9aEn",
         // subscription_id: duration === "monthly" ? selectedPlan.monthlySubscriptionId : selectedPlan.yearlySubscriptionId,
-        // subscription_id: 'sub_QSWzbEqWeWjlU6',
-        plan_id: 'plan_QSWz6nuQxdL7Sj',
+        subscription_id: "sub_QTckjrhwoHKpK8",
+        // plan_id: "plan_QSWz6nuQxdL7Sj",
         name: "Syncly",
         description: duration === "monthly" ? "Monthly Subscription" : "Yearly Subscription (2 months free!)",
         theme: { color: "#6366F1" },
-        handler: function (response: any) {
+        handler: function (response) {
+          console.log("response", response);
           alert("Subscription successful: " + JSON.stringify(response));
         },
       });
@@ -42,7 +46,7 @@ export default function CheckoutPage({ searchParams }: CheckoutPageProps) {
       razorpay.open();
     } catch (error) {
       console.error("Payment failed:", error);
-      addToast({ description: 'Oops! Something went wrong, please contact us.', color: 'danger' })
+      addToast({ description: "Oops! Something went wrong, please contact us.", color: "danger" });
     }
   };
 
@@ -82,7 +86,7 @@ export default function CheckoutPage({ searchParams }: CheckoutPageProps) {
           {/* Yearly Plan */}
           <div
             className="cursor-pointer border-2 rounded-lg p-5 transition duration-200 relative border-orange-600 hover:shadow-lg hover:scale-[1.01] hover:border-orange-500"
-            onClick={() => handlePayment('yearly')}
+            onClick={() => handlePayment("yearly")}
           >
             <div className="absolute top-0 right-0 bg-orange-600 text-xs font-bold text-black px-2 py-1 rounded-bl-md">
               2 Months Free!
@@ -93,14 +97,14 @@ export default function CheckoutPage({ searchParams }: CheckoutPageProps) {
                 <p className="text-sm text-gray-500">Pay once, enjoy all year</p>
               </div>
               <span className="text-lg font-medium text-gray-700 dark:text-gray-200">
-                ${Number(selectedPlan.price.replace('$', '')) * 10}
+                ${Number(selectedPlan.price.replace("$", "")) * 10}
               </span>
             </div>
           </div>
 
           {/* Monthly Plan */}
           <div
-            onClick={() => handlePayment('monthly')}
+            onClick={() => handlePayment("monthly")}
             className="cursor-pointer border-2 rounded-lg p-5 transition duration-200 border-indigo-500 shadow-md hover:shadow-lg hover:scale-[1.01] hover:border-indigo-400"
           >
             <div className="flex items-center justify-between">

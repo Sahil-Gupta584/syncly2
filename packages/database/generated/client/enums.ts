@@ -52,3 +52,13 @@ export const InviteStatus = {
 } as const
 
 export type InviteStatus = (typeof InviteStatus)[keyof typeof InviteStatus]
+
+
+export const subscriptionStatus = {
+  active: 'active',
+  cancelled: 'cancelled',
+  completed: 'completed',
+  failed: 'failed'
+} as const
+
+export type subscriptionStatus = (typeof subscriptionStatus)[keyof typeof subscriptionStatus]

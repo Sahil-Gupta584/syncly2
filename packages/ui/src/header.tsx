@@ -9,11 +9,15 @@ export default function Header({
   DrawerComponent: React.FC<{ session: Session }>;
 }) {
   const { data } = useSession();
-  const url = new URL(typeof window !== 'undefined' ? window.location.href : 'http://localhost:3000');
-  const routesForHiddenHeader = ["/auth", "/", "/checkout"];
 
-  if (routesForHiddenHeader.includes(url.pathname)) {
-    return null;
+  if (typeof window !== 'undefined') {
+
+    const url = new URL(window.location.href)
+    const routesForHiddenHeader = ["/auth", "/checkout"];
+
+    if (routesForHiddenHeader.includes(url.pathname)) {
+      return null;
+    }
   }
   return (
     <>
