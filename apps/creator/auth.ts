@@ -116,7 +116,34 @@ const result = NextAuth(() => {
         token.creatorId = dbUser?.id;
         return token;
       },
+      async signIn({ user, account }) {
+        if (!account) return false;
+        if (account.provider === "google") {
+          // Try to find a matching user by email
+          const existingUser = await prisma.user.findUnique({
+            where: { email: user.email as string },
+          });
 
+          if (existingUser && existingUser.id !== user.id) {
+            // If a user exists but not linked, manually link the account
+            await prisma.account.create({
+              data: {
+                userId: existingUser.id,
+                type: "oauth",
+                provider: account.provider,
+                providerAccountId: account.providerAccountId,
+                access_token: account.access_token,
+                refresh_token: account.refresh_token,
+                id_token: account.id_token,
+              },
+            });
+
+            return true;
+          }
+        }
+
+        return true;
+      },
       async session({ session, token }) {
         session.user.role = token.role as TRole;
         session.user.id = token.id as string;

@@ -6,6 +6,9 @@ import { backendRes } from "@repo/lib/utils";
 import moment from "moment";
 import { User } from "next-auth";
 import nodemailer from "nodemailer";
+export async function test() {
+  return await prisma.account.findMany({});
+}
 
 export async function getVideoDetails(videoId: string) {
   try {

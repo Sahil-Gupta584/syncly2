@@ -3,7 +3,6 @@ import { getCreatorDetails } from "@/lib/dbActions";
 import { addToast, Skeleton } from "@heroui/react";
 import { TRole } from "@repo/lib/constants";
 import { VideoCard, VideoDropdown } from "@repo/ui";
-import moment from "moment";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -26,24 +25,17 @@ export default function Home() {
       }
       const res = await getCreatorDetails({ userId: data.user.id });
 
-      if (res && !res.ok) {
-        addToast({
-          color: "danger",
-          description: "Failed to fetch videos.",
-        });
-        return;
-      }
-      // console.log("res.result", res.result);
       if (res.ok) {
         setUserDetails(res.result);
+        return;
       }
+      addToast({
+        color: "danger",
+        description: "Failed to fetch videos.",
+      });
     })();
-  }, [data?.user.id, status]); // Added dependency
-  console.log(
-    moment().subtract(20, "days").unix(),
-    moment().subtract(20, "days")
-  );
-  // console.log(moment(1744187881 / 1000).format("YYYY-MM-DD HH:mm:ss"));
+  }, [data?.user.id, status]);
+
   return (
     <>
       <div className="main">
@@ -67,7 +59,14 @@ export default function Home() {
                 />
               </div>
             ))}
-
+          {userDetails && userDetails.ownedVideos.length === 0 && (
+            <div className="flex items-center justify-center w-full h-[300px] col-span-full">
+              <p className="text-gray-500 text-2xl">
+                No videos found. Start by{" "}
+                <span className="text-primary">Importing</span> one!
+              </p>
+            </div>
+          )}
           {!userDetails && (
             <>
               <Skeleton className="w-[387px] h-[310px] rounded-lg" />

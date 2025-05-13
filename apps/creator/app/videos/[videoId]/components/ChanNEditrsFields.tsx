@@ -17,8 +17,6 @@ export default function ChanNEditrsFields({
   previousData,
 }: UserChanNEditrsProps) {
   const {
-    id: videoId,
-    ownerId: creatorId,
     owner: { channels: userChannels, editors: userEditors },
   } = previousData;
   console.log("previousData.selectedEditorsId", previousData.selectedEditorsId);
@@ -57,7 +55,7 @@ export default function ChanNEditrsFields({
         <ShowChannelsSkeleton />
       )}
 
-      {userEditors && userEditors.length > 0 ? (
+      {userEditors && userEditors.length > 0 && (
         <div className="space-y-2">
           <p className=" font-medium text-xl">Can be accessed by:</p>
           <CheckboxGroup
@@ -83,9 +81,8 @@ export default function ChanNEditrsFields({
             ))}
           </CheckboxGroup>
         </div>
-      ) : (
-        <ShowChannelsSkeleton />
       )}
+      {!userEditors && <ShowChannelsSkeleton />}
     </>
   );
 }

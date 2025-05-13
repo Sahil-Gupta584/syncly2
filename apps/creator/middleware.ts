@@ -25,7 +25,7 @@ export default async function middleware(req: NextRequest) {
   if (!session?.email) return NextResponse.next();
 
   if (session?.email && pathname === "/auth") {
-    return NextResponse.redirect(new URL("/videos", req.nextUrl.origin));
+    return NextResponse.redirect(new URL("/", req.nextUrl.origin));
   }
   const res = await fetch(
     `${process.env.CREATOR_BASE_URL}/api/user?email=${session?.email}`
@@ -33,9 +33,9 @@ export default async function middleware(req: NextRequest) {
 
   const user: Prisma.UserGetPayload<{ include: { subscriptions: true } }> =
     await res.json();
-
+  if (!user) NextResponse.next();
   const isTrialExpired =
-    user && user.plan === "TRIAL" && Number(user.trialEndAt) < moment().unix();
+    user.plan === "TRIAL" && Number(user.trialEndAt) < moment().unix();
 
   if (isTrialExpired && pathname !== "/blocked/trial-expired") {
     return NextResponse.redirect(
@@ -44,11 +44,19 @@ export default async function middleware(req: NextRequest) {
   }
 
   const isPaymentActive =
-    user &&
     user.subscriptions[0] &&
     user.subscriptions[0].status === "active" &&
     moment(user.subscriptions[0].createdAt).unix() <
       moment(user.subscriptions[0].createdAt).add(7, "day").unix();
+  // console.log("isPaymentActive", isPaymentActive);
+  // console.log("cond1", user.plan !== "TRIAL");
+  // console.log("cond2", user.subscriptions[0]);
+  // console.log("cond3", user.subscriptions[0].status === "active");
+  // console.log(
+  //   "cond4",
+  //   moment(user.subscriptions[0].createdAt).unix() <
+  //     moment(user.subscriptions[0].createdAt).add(7, "day").unix()
+  // );
 
   if (
     user.plan !== "TRIAL" &&

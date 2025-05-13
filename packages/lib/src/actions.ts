@@ -129,7 +129,6 @@ export async function uploadVideoAction({
     if (!videoDetails.videoFile) {
       throw new Error("Video file not provided.");
     }
-    console.log("videoDetails", videoDetails);
 
     const { channelId, importerId, ownerId, videoFile, editors } = videoDetails;
     const { result, error } = await getGoogleServices(ownerId);
@@ -139,30 +138,30 @@ export async function uploadVideoAction({
     const { drive } = result;
     const folderId = await getOrCreateFolder(drive, "Syncly");
 
-    const { gDriveId, video } = await prisma.$transaction(async () => {
-      const buffer = await videoFile.arrayBuffer();
-      const stream = bufferToStream(buffer);
+    const buffer = await videoFile.arrayBuffer();
+    const stream = bufferToStream(buffer);
 
-      const uploadedFileData = await drive.files.create({
-        requestBody: {
-          name: videoFile.name,
-          parents: [folderId],
-          mimeType: videoFile.type,
-        },
-        media: {
-          mimeType: videoFile.type,
-          body: stream,
-        },
-        fields: "id, thumbnailLink",
-      });
+    const uploadedFileData = await drive.files.create({
+      requestBody: {
+        name: videoFile.name,
+        parents: [folderId],
+        mimeType: videoFile.type,
+      },
+      media: {
+        mimeType: videoFile.type,
+        body: stream,
+      },
+      fields: "id, thumbnailLink",
+    });
 
-      if (!uploadedFileData.data.id) {
-        throw new Error("Failed to upload video to Google Drive");
-      }
+    if (!uploadedFileData.data.id) {
+      throw new Error("Failed to upload video to Google Drive");
+    }
+    const { video } = await prisma.$transaction(async () => {
       const video = await prisma.video.create({
         data: {
           createdAt: `${Date.now() / 1000}`,
-          gDriveId: uploadedFileData.data.id,
+          gDriveId: uploadedFileData.data.id as string,
           title: defaultVideoTitle,
           description: defaultVideoDesc,
           importedById: importerId,
@@ -173,28 +172,28 @@ export async function uploadVideoAction({
           thumbnailUrl: uploadedFileData.data.thumbnailLink,
         },
       });
-      return { video, gDriveId: uploadedFileData.data.id };
-    });
 
-    if (editors) {
-      for (const { email, id } of editors) {
-        await prisma.videoEditor.create({
-          data: { videoId: video.id, editorId: id },
-        });
+      if (editors) {
+        for (const { email, id } of editors) {
+          await prisma.videoEditor.create({
+            data: { videoId: video.id, editorId: id },
+          });
 
-        await drive.permissions.create({
-          fileId: gDriveId,
-          requestBody: {
-            role: "reader",
-            type: "user",
-            emailAddress: email,
-          },
-        });
+          await drive.permissions.create({
+            fileId: uploadedFileData.data.id as string,
+            requestBody: {
+              role: "reader",
+              type: "user",
+              emailAddress: email,
+            },
+          });
+        }
       }
-    }
+      return { video };
+    });
     await updateThumbnails({
       ownerId: videoDetails.ownerId,
-      videos: [{ gDriveId, videoId: video.id }],
+      videos: [{ gDriveId: uploadedFileData.data.id, videoId: video.id }],
     });
     return backendRes({
       ok: true,
